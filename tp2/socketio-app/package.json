@@ -1,0 +1,16 @@
+{
+  "name": "tp2-socketio-app",
+  "version": "1.0.0",
+  "description": "TP2 - Application avec Socket.io pour communication temps réel",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["nodejs", "socket.io", "real-time", "websockets"],
+  "author": "INE3 - INPT",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.6.1"
+  }
+}

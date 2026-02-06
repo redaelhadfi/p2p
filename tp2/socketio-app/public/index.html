@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TP2 - Application Socket.io</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .auth-forms {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .form-group {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .form-group h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        
+        button {
+            background: #667eea;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        button:hover {
+            background: #764ba2;
+        }
+        
+        .chat-container {
+            display: none;
+        }
+        
+        .chat-container.active {
+            display: block;
+        }
+        
+        .users-sidebar {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .users-list {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .user-badge {
+            background: #667eea;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+        
+        .messages {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 10px;
+            background: #f8f9fa;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+        }
+        
+        .message strong {
+            color: #667eea;
+        }
+        
+        .message .timestamp {
+            font-size: 0.8em;
+            color: #999;
+            margin-left: 10px;
+        }
+        
+        .system-message {
+            background: #fff3cd;
+            color: #856404;
+            text-align: center;
+            font-style: italic;
+        }
+        
+        .typing-indicator {
+            color: #999;
+            font-style: italic;
+            min-height: 20px;
+        }
+        
+        .message-input {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .message-input input {
+            flex: 1;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .files-result {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 10px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Application Socket.io - Communication Temps Réel</h1>
+        
+        <!-- Formulaires d'authentification -->
+        <div id="auth-section" class="auth-forms">
+            <div class="form-group">
+                <h2>📝 Inscription</h2>
+                <form id="register-form">
+                    <input type="text" id="reg-firstname" placeholder="Prénom" required>
+                    <input type="text" id="reg-lastname" placeholder="Nom" required>
+                    <input type="text" id="reg-login" placeholder="Login" required>
+                    <input type="password" id="reg-password" placeholder="Mot de passe" required>
+                    <button type="submit">S'inscrire</button>
+                </form>
+                <div id="register-message"></div>
+            </div>
+            
+            <div class="form-group">
+                <h2>🔐 Connexion</h2>
+                <form id="login-form">
+                    <input type="text" id="login-username" placeholder="Login" required>
+                    <input type="password" id="login-password" placeholder="Mot de passe" required>
+                    <button type="submit">Se connecter</button>
+                </form>
+                <div id="login-message"></div>
+            </div>
+        </div>
+        
+        <!-- Section chat (cachée par défaut) -->
+        <div id="chat-section" class="chat-container">
+            <div class="users-sidebar">
+                <h3>👥 Utilisateurs connectés (<span id="users-count">0</span>)</h3>
+                <div id="users-list" class="users-list"></div>
+            </div>
+            
+            <div id="messages" class="messages"></div>
+            
+            <div class="typing-indicator" id="typing-indicator"></div>
+            
+            <div class="message-input">
+                <input type="text" id="message-input" placeholder="Tapez votre message...">
+                <button id="send-btn">Envoyer</button>
+            </div>
+            
+            <div class="actions">
+                <button id="find-files-btn">🔍 Lister les fichiers</button>
+                <button id="logout-btn">🚪 Déconnexion</button>
+            </div>
+            
+            <div id="files-result" class="files-result" style="display:none;"></div>
+        </div>
+    </div>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket;
+        let currentUser = null;
+        let typingTimer;
+        
+        // Gestion de l'inscription
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const data = {
+                firstname: document.getElementById('reg-firstname').value,
+                lastname: document.getElementById('reg-lastname').value,
+                login: document.getElementById('reg-login').value,
+                password: document.getElementById('reg-password').value
+            };
+            
+            try {
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    document.getElementById('register-message').innerHTML = 
+                        '<div class="success">✅ ' + result.message + '</div>';
+                    document.getElementById('register-form').reset();
+                } else {
+                    document.getElementById('register-message').innerHTML = 
+                        '<div class="error">❌ ' + result.error + '</div>';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+        
+        // Gestion de la connexion
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const data = {
+                login: document.getElementById('login-username').value,
+                password: document.getElementById('login-password').value
+            };
+            
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok) {
+                    currentUser = result.user;
+                    initializeChat();
+                } else {
+                    document.getElementById('login-message').innerHTML = 
+                        '<div class="error">❌ ' + result.error + '</div>';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        });
+        
+        // Initialiser le chat
+        function initializeChat() {
+            document.getElementById('auth-section').style.display = 'none';
+            document.getElementById('chat-section').classList.add('active');
+            
+            // Connexion Socket.io
+            socket = io();
+            
+            socket.emit('authenticate', { login: currentUser.login });
+            
+            addSystemMessage('Bienvenue ' + currentUser.firstname + ' ' + currentUser.lastname + '!');
+            
+            // Écouter les messages
+            socket.on('chat-message', (data) => {
+                addMessage(data.user, data.message, data.timestamp);
+            });
+            
+            socket.on('user-connected', (data) => {
+                addSystemMessage(data.login + ' vient de se connecter');
+                document.getElementById('users-count').textContent = data.totalUsers;
+            });
+            
+            socket.on('user-disconnected', (data) => {
+                addSystemMessage(data.login + ' s\'est déconnecté');
+                document.getElementById('users-count').textContent = data.totalUsers;
+            });
+            
+            socket.on('users-list', (users) => {
+                updateUsersList(users);
+            });
+            
+            socket.on('user-typing', (data) => {
+                document.getElementById('typing-indicator').textContent = 
+                    data.user + ' est en train d\'écrire...';
+            });
+            
+            socket.on('user-stop-typing', () => {
+                document.getElementById('typing-indicator').textContent = '';
+            });
+            
+            socket.on('find-files-result', (data) => {
+                const filesResult = document.getElementById('files-result');
+                filesResult.style.display = 'block';
+                if (data.error) {
+                    filesResult.innerHTML = '<strong>Erreur:</strong> ' + data.error;
+                } else {
+                    filesResult.textContent = data.files;
+                }
+            });
+        }
+        
+        // Envoyer un message
+        document.getElementById('send-btn').addEventListener('click', sendMessage);
+        document.getElementById('message-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+            
+            if (message && socket) {
+                socket.emit('chat-message', {
+                    user: currentUser.login,
+                    message: message
+                });
+                input.value = '';
+                socket.emit('stop-typing');
+            }
+        }
+        
+        // Indicateur de frappe
+        document.getElementById('message-input').addEventListener('input', () => {
+            if (socket) {
+                clearTimeout(typingTimer);
+                socket.emit('typing', { user: currentUser.login });
+                
+                typingTimer = setTimeout(() => {
+                    socket.emit('stop-typing');
+                }, 1000);
+            }
+        });
+        
+        // Lister les fichiers
+        document.getElementById('find-files-btn').addEventListener('click', () => {
+            if (socket) {
+                socket.emit('find-files');
+            }
+        });
+        
+        // Déconnexion
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            if (socket) {
+                socket.disconnect();
+            }
+            location.reload();
+        });
+        
+        // Ajouter un message au chat
+        function addMessage(user, message, timestamp) {
+            const messagesDiv = document.getElementById('messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            messageDiv.innerHTML = `<strong>${user}:</strong> ${message} <span class="timestamp">${timestamp}</span>`;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+        
+        // Ajouter un message système
+        function addSystemMessage(message) {
+            const messagesDiv = document.getElementById('messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message system-message';
+            messageDiv.textContent = message;
+            messagesDiv.appendChild(messageDiv);
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+        
+        // Mettre à jour la liste des utilisateurs
+        function updateUsersList(users) {
+            const usersListDiv = document.getElementById('users-list');
+            usersListDiv.innerHTML = '';
+            
+            users.forEach(user => {
+                const badge = document.createElement('span');
+                badge.className = 'user-badge';
+                badge.textContent = '👤 ' + user;
+                usersListDiv.appendChild(badge);
+            });
+            
+            document.getElementById('users-count').textContent = users.length;
+        }
+    </script>
+</body>
+</html>

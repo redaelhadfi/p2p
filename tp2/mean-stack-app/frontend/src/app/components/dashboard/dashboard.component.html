@@ -1,0 +1,97 @@
+<div class="container">
+  <div class="dashboard-container">
+    <div class="welcome-section card">
+      <h1>👋 Welcome, {{ currentUser?.firstname }}!</h1>
+      <p>Manage your account and view all registered users.</p>
+    </div>
+
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
+    <div class="card">
+      <h2>📊 Dashboard Statistics</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">👥</div>
+          <div class="stat-content">
+            <h3>{{ users.length }}</h3>
+            <p>Total Users</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">✅</div>
+          <div class="stat-content">
+            <h3>Active</h3>
+            <p>Your Status</p>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-content">
+            <h3>TP2</h3>
+            <p>Current Project</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-header">
+        <h2>👥 All Users</h2>
+        <p>Manage registered users in the system</p>
+      </div>
+
+      <div *ngIf="loading" class="text-center">
+        <div class="spinner"></div>
+        <p>Loading users...</p>
+      </div>
+
+      <div *ngIf="!loading && users.length > 0" class="users-table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Avatar</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Age</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users">
+              <td>
+                <div class="avatar">
+                  <img *ngIf="user.avatar" [src]="user.avatar" alt="{{ user.firstname }}">
+                  <span *ngIf="!user.avatar" class="avatar-placeholder">{{ user.firstname[0] }}{{ user.lastname[0] }}</span>
+                </div>
+              </td>
+              <td>
+                <strong>{{ user.firstname }} {{ user.lastname }}</strong>
+              </td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.age || 'N/A' }}</td>
+              <td>
+                <button 
+                  *ngIf="user._id !== currentUser?._id"
+                  class="btn btn-danger btn-sm" 
+                  (click)="deleteUser(user._id!)">
+                  Delete
+                </button>
+                <span *ngIf="user._id === currentUser?._id" class="badge">You</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngIf="!loading && users.length === 0" class="empty-state">
+        <p>No users found</p>
+      </div>
+    </div>
+  </div>
+</div>

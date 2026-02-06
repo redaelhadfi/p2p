@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Complete WebRTC Application</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎥 Application WebRTC P2P Complète</h1>
+            <p class="subtitle">Communication Audio/Vidéo et Chat en Temps Réel</p>
+        </header>
+
+        <div class="status-bar">
+            <div id="statusIndicator" class="status-disconnected">
+                <span class="status-dot"></span>
+                <span id="statusText">Déconnecté</span>
+            </div>
+            <div id="channelInfo"></div>
+        </div>
+
+        <!-- Section Vidéo -->
+        <div class="video-section">
+            <div class="video-container">
+                <h3>📹 Ma Vidéo Locale</h3>
+                <video id="localVideo" autoplay muted playsinline></video>
+                <p class="video-label">Vous</p>
+            </div>
+            <div class="video-container">
+                <h3>📺 Vidéo du Pair Distant</h3>
+                <video id="remoteVideo" autoplay playsinline></video>
+                <p class="video-label">Pair distant</p>
+            </div>
+        </div>
+
+        <!-- Contrôles -->
+        <div class="controls">
+            <button id="startButton" class="btn btn-success">
+                🚀 Démarrer
+            </button>
+            <button id="callButton" class="btn btn-primary" disabled>
+                📞 Appeler
+            </button>
+            <button id="hangupButton" class="btn btn-danger" disabled>
+                📴 Raccrocher
+            </button>
+            <button id="muteAudioButton" class="btn btn-warning" disabled>
+                🔇 Muet
+            </button>
+            <button id="muteVideoButton" class="btn btn-warning" disabled>
+                📹 Arrêter Vidéo
+            </button>
+        </div>
+
+        <!-- Section Chat -->
+        <div class="chat-section">
+            <h3>💬 Chat P2P (RTCDataChannel)</h3>
+            <div id="chatMessages" class="chat-messages"></div>
+            <div class="chat-input-container">
+                <input type="text" id="chatInput" placeholder="Tapez votre message..." disabled>
+                <button id="sendMessageButton" class="btn btn-primary" disabled>
+                    Envoyer
+                </button>
+            </div>
+        </div>
+
+        <!-- Console de logs -->
+        <div class="logs-section">
+            <h3>📋 Console de Logs</h3>
+            <div id="logsConsole" class="logs-console"></div>
+            <button id="clearLogsButton" class="btn btn-secondary">Effacer</button>
+        </div>
+    </div>
+
+    <script src='/socket.io/socket.io.js'></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

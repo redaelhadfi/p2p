@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tomcat-users xmlns="http://tomcat.apache.org/xml"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
+              version="1.0">
+              
+  <!-- Define the role -->
+  <role rolename="tomcat"/>
+  
+  <!-- Define users with the tomcat role -->
+  <user username="admin" password="admin123" roles="tomcat"/>
+  <user username="user1" password="pass123" roles="tomcat"/>
+  <user username="testuser" password="test" roles="tomcat"/>
+  
+</tomcat-users>

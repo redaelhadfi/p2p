@@ -1,0 +1,29 @@
+{
+  "name": "webrtc-complete-app",
+  "version": "1.0.0",
+  "description": "Application WebRTC P2P complète avec audio/vidéo et chat",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "webrtc",
+    "p2p",
+    "video",
+    "audio",
+    "chat",
+    "datachannel",
+    "signaling",
+    "socket.io"
+  ],
+  "author": "Reda Elhadfi",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns="http://java.sun.com/xml/ns/javaee" 
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  
+  <display-name>LotteryWebApp-Secure</display-name>
+  
+  <welcome-file-list>
+    <welcome-file>greetings-secure.html</welcome-file>
+  </welcome-file-list>
+  
+  <!-- Servlet Definitions -->
+  <servlet>
+    <description>Secure Greeting Servlet</description>
+    <display-name>SecureGreetingServlet</display-name>
+    <servlet-name>SecureGreetingServlet</servlet-name>
+    <servlet-class>exple1.SecureGreetingServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>SecureGreetingServlet</servlet-name>
+    <url-pattern>/secure-hello</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Security Constraint -->
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>Secure Lottery Area</web-resource-name>
+      <url-pattern>/secure-hello</url-pattern>
+      <url-pattern>/greetings-secure.html</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>tomcat</role-name>
+    </auth-constraint>
+  </security-constraint>
+  
+  <!-- Login Configuration -->
+  <login-config>
+    <auth-method>BASIC</auth-method>
+    <realm-name>Lottery Application</realm-name>
+  </login-config>
+  
+  <!-- Security Roles -->
+  <security-role>
+    <role-name>tomcat</role-name>
+  </security-role>
+  
+</web-app>

@@ -1,0 +1,16 @@
+{
+  "name": "tp2-complete-app",
+  "version": "1.0.0",
+  "description": "TP2 - Application Node.js complète avec gestion de sessions et fichiers",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["nodejs", "p2p", "real-time", "web"],
+  "author": "INE3 - INPT",
+  "license": "ISC",
+  "dependencies": {
+    "formidable": "^2.1.1"
+  }
+}

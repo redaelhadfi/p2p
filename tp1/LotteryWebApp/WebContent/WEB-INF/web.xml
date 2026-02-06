@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xmlns="http://java.sun.com/xml/ns/javaee" 
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  
+  <display-name>LotteryWebApp</display-name>
+  
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>greetings.html</welcome-file>
+    <welcome-file>greetings.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!-- Servlet Definitions -->
+  <servlet>
+    <description>Basic Greeting Servlet for Lottery Application</description>
+    <display-name>GreetingServlet</display-name>
+    <servlet-name>GreetingServlet</servlet-name>
+    <servlet-class>exple1.GreetingServlet</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <description>Lottery Servlet with JDBC Integration</description>
+    <display-name>LotteryServletJDBC</display-name>
+    <servlet-name>LotteryServletJDBC</servlet-name>
+    <servlet-class>exple1.LotteryServletJDBC</servlet-class>
+  </servlet>
+  
+  <servlet>
+    <description>Secure Greeting Servlet</description>
+    <display-name>SecureGreetingServlet</display-name>
+    <servlet-name>SecureGreetingServlet</servlet-name>
+    <servlet-class>exple1.SecureGreetingServlet</servlet-class>
+  </servlet>
+  
+  <!-- Servlet Mappings -->
+  <servlet-mapping>
+    <servlet-name>GreetingServlet</servlet-name>
+    <url-pattern>/hello</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>LotteryServletJDBC</servlet-name>
+    <url-pattern>/lottery-jdbc</url-pattern>
+  </servlet-mapping>
+  
+  <servlet-mapping>
+    <servlet-name>SecureGreetingServlet</servlet-name>
+    <url-pattern>/secure-hello</url-pattern>
+  </servlet-mapping>
+  
+  <!-- Filter Definitions -->
+  <filter>
+    <filter-name>BlacklistFilter</filter-name>
+    <filter-class>exple1.BlacklistFilter</filter-class>
+    <init-param>
+      <param-name>blacklist</param-name>
+      <param-value>hacker, spam, bot, admin, test, malicious, evil</param-value>
+    </init-param>
+  </filter>
+  
+  <filter-mapping>
+    <filter-name>BlacklistFilter</filter-name>
+    <url-pattern>/filtered-hello</url-pattern>
+  </filter-mapping>
+  
+  <!-- Error Pages Configuration -->
+  <error-page>
+    <error-code>404</error-code>
+    <location>/error-404.jsp</location>
+  </error-page>
+  
+  <error-page>
+    <error-code>403</error-code>
+    <location>/error-403.jsp</location>
+  </error-page>
+  
+  <error-page>
+    <error-code>500</error-code>
+    <location>/error-500.jsp</location>
+  </error-page>
+  
+  <error-page>
+    <exception-type>java.lang.Exception</exception-type>
+    <location>/error-general.jsp</location>
+  </error-page>
+  
+  <error-page>
+    <exception-type>java.sql.SQLException</exception-type>
+    <location>/error-500.jsp</location>
+  </error-page>
+  
+</web-app>

@@ -1,0 +1,19 @@
+<nav>
+  <div class="container">
+    <div class="nav-content">
+      <div class="logo">
+        <h2>🚀 MEAN Stack App</h2>
+      </div>
+      <ul *ngIf="isAuthenticated">
+        <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+        <li><a routerLink="/profile" routerLinkActive="active">Profile</a></li>
+        <li><span class="user-info">👤 {{ currentUser?.firstname }} {{ currentUser?.lastname }}</span></li>
+        <li><button class="btn btn-secondary" (click)="logout()">Logout</button></li>
+      </ul>
+      <ul *ngIf="!isAuthenticated">
+        <li><a routerLink="/login" routerLinkActive="active">Login</a></li>
+        <li><a routerLink="/register" routerLinkActive="active">Register</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>

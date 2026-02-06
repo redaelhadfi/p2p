@@ -1,0 +1,158 @@
+<div class="container">
+  <div class="profile-container">
+    <h1 class="page-title">👤 My Profile</h1>
+
+    <div *ngIf="successMessage" class="alert alert-success">
+      {{ successMessage }}
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Profile Information Section -->
+    <div class="card">
+      <h2>📝 Profile Information</h2>
+      <div class="profile-header">
+        <div class="avatar-section">
+          <div class="avatar-large">
+            <img *ngIf="currentUser?.avatar" [src]="currentUser?.avatar" alt="{{ currentUser?.firstname }}">
+            <span *ngIf="!currentUser?.avatar" class="avatar-placeholder">
+              {{ currentUser?.firstname?.[0] }}{{ currentUser?.lastname?.[0] }}
+            </span>
+          </div>
+          <div class="avatar-upload">
+            <input 
+              type="file" 
+              id="avatar" 
+              accept="image/*" 
+              (change)="onAvatarSelected($event)"
+              style="display: none"
+            />
+            <label for="avatar" class="btn btn-secondary btn-sm">
+              📷 Change Avatar
+            </label>
+          </div>
+        </div>
+
+        <div class="profile-info">
+          <h3>{{ currentUser?.firstname }} {{ currentUser?.lastname }}</h3>
+          <p class="email">{{ currentUser?.email }}</p>
+          <p class="age" *ngIf="currentUser?.age">Age: {{ currentUser?.age }} years old</p>
+        </div>
+      </div>
+
+      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstname">First Name</label>
+            <input
+              type="text"
+              id="firstname"
+              formControlName="firstname"
+              class="form-control"
+              [class.invalid]="submitted && f['firstname'].errors"
+            />
+            <div *ngIf="submitted && f['firstname'].errors" class="error-message">
+              <span *ngIf="f['firstname'].errors['required']">First name is required</span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="lastname">Last Name</label>
+            <input
+              type="text"
+              id="lastname"
+              formControlName="lastname"
+              class="form-control"
+              [class.invalid]="submitted && f['lastname'].errors"
+            />
+            <div *ngIf="submitted && f['lastname'].errors" class="error-message">
+              <span *ngIf="f['lastname'].errors['required']">Last name is required</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email (Cannot be changed)</label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              class="form-control"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input
+              type="number"
+              id="age"
+              formControlName="age"
+              class="form-control"
+              [class.invalid]="submitted && f['age'].errors"
+            />
+            <div *ngIf="submitted && f['age'].errors" class="error-message">
+              <span *ngIf="f['age'].errors['min']">Age must be at least 1</span>
+              <span *ngIf="f['age'].errors['max']">Age must be less than 150</span>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" [disabled]="loading">
+          <span *ngIf="loading" class="spinner"></span>
+          <span *ngIf="!loading">💾 Update Profile</span>
+        </button>
+      </form>
+    </div>
+
+    <!-- File Upload Section -->
+    <div class="card">
+      <h2>📁 File Management</h2>
+      <p class="subtitle">Upload and manage your files</p>
+
+      <div class="file-upload-section">
+        <div class="upload-area">
+          <input 
+            type="file" 
+            id="file" 
+            (change)="onFileSelected($event)"
+            style="display: none"
+          />
+          <label for="file" class="upload-label">
+            <div class="upload-icon">📎</div>
+            <p *ngIf="!selectedFile">Click to select a file</p>
+            <p *ngIf="selectedFile" class="selected-file">
+              Selected: <strong>{{ selectedFile.name }}</strong>
+            </p>
+          </label>
+        </div>
+
+        <button 
+          *ngIf="selectedFile" 
+          class="btn btn-success"
+          (click)="onUpload()">
+          ⬆️ Upload File
+        </button>
+      </div>
+
+      <div *ngIf="uploadedFiles.length > 0" class="files-list">
+        <h3>Your Files</h3>
+        <div class="file-grid">
+          <div *ngFor="let file of uploadedFiles" class="file-card">
+            <div class="file-icon">📄</div>
+            <div class="file-name">{{ file }}</div>
+            <button class="btn btn-danger btn-sm" (click)="deleteFile(file)">
+              🗑️ Delete
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="uploadedFiles.length === 0" class="empty-state">
+        <p>No files uploaded yet</p>
+      </div>
+    </div>
+  </div>
+</div>

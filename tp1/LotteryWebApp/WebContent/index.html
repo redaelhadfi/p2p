@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Lottery Web Application - Accueil</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 20px;
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+    
+    h1 {
+        color: #667eea;
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 2.5em;
+    }
+    
+    .subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 40px;
+        font-size: 1.1em;
+    }
+    
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+    }
+    
+    .card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-left: 5px solid;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card.basic { border-color: #4CAF50; }
+    .card.jsp { border-color: #2196F3; }
+    .card.jdbc { border-color: #FF9800; }
+    .card.secure { border-color: #F44336; }
+    .card.filter { border-color: #9C27B0; }
+    .card.advanced { border-color: #00BCD4; }
+    
+    .card-icon {
+        font-size: 3em;
+        margin-bottom: 15px;
+    }
+    
+    .card h3 {
+        color: #333;
+        margin-bottom: 10px;
+        font-size: 1.4em;
+    }
+    
+    .card p {
+        color: #666;
+        margin-bottom: 15px;
+        line-height: 1.6;
+    }
+    
+    .card-features {
+        list-style: none;
+        margin-bottom: 20px;
+    }
+    
+    .card-features li {
+        color: #555;
+        padding: 5px 0;
+        font-size: 0.9em;
+    }
+    
+    .card-features li:before {
+        content: "✓ ";
+        color: #4CAF50;
+        font-weight: bold;
+        margin-right: 5px;
+    }
+    
+    .btn {
+        display: inline-block;
+        padding: 12px 25px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        text-align: center;
+        font-weight: 500;
+    }
+    
+    .btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+    
+    .info-box {
+        background: #E3F2FD;
+        border-left: 4px solid #2196F3;
+        padding: 20px;
+        margin: 30px 0;
+        border-radius: 5px;
+    }
+    
+    .info-box h4 {
+        color: #1976D2;
+        margin-bottom: 10px;
+    }
+    
+    .info-box p {
+        color: #555;
+        line-height: 1.6;
+    }
+    
+    .footer {
+        text-align: center;
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 2px solid #eee;
+        color: #666;
+    }
+    
+    .badge {
+        display: inline-block;
+        padding: 5px 10px;
+        background: #4CAF50;
+        color: white;
+        border-radius: 12px;
+        font-size: 0.8em;
+        margin-left: 10px;
+    }
+    
+    .badge.new {
+        background: #FF5722;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>🎰 Application de Loterie Virtuelle</h1>
+    <p class="subtitle">TP1 - Les Servlets HTTP | Communication P2P en Temps Réel sur le Web</p>
+    
+    <div class="info-box">
+        <h4>📚 À propos de ce projet</h4>
+        <p>
+            Cette application démontre l'utilisation des servlets HTTP, JSP, JDBC, filtres, 
+            et mécanismes de sécurité dans une application JEE. Chaque version illustre 
+            des concepts différents du développement web Java Enterprise Edition.
+        </p>
+    </div>
+    
+    <div class="grid">
+        <!-- Basic HTML Version -->
+        <div class="card basic">
+            <div class="card-icon">📄</div>
+            <h3>Version de Base <span class="badge">HTML</span></h3>
+            <p>Application simple avec formulaire HTML et servlet de base.</p>
+            <ul class="card-features">
+                <li>Formulaire HTML statique</li>
+                <li>Servlet HttpServlet de base</li>
+                <li>Méthodes GET et POST</li>
+                <li>Génération dynamique HTML</li>
+            </ul>
+            <a href="greetings.html" class="btn">Lancer l'application</a>
+        </div>
+        
+        <!-- JSP Simple Version -->
+        <div class="card jsp">
+            <div class="card-icon">🎨</div>
+            <h3>Version JSP Simple <span class="badge">JSP</span></h3>
+            <p>Interface améliorée avec JavaServer Pages et styles modernes.</p>
+            <ul class="card-features">
+                <li>JSP avec scriptlets</li>
+                <li>Design moderne avec CSS</li>
+                <li>Résultat sur la même page</li>
+                <li>Informations de session</li>
+            </ul>
+            <a href="greetings.jsp" class="btn">Lancer l'application</a>
+        </div>
+        
+        <!-- JSP Advanced Version -->
+        <div class="card advanced">
+            <div class="card-icon">🚀</div>
+            <h3>Version JSP Avancée <span class="badge new">Avancé</span></h3>
+            <p>Version JSP avec affichage détaillé des informations de session et requête.</p>
+            <ul class="card-features">
+                <li>Tableau détaillé de session</li>
+                <li>Informations HTTP complètes</li>
+                <li>IP client et User-Agent</li>
+                <li>Date et heure</li>
+            </ul>
+            <a href="greetings-advanced.jsp" class="btn">Lancer l'application</a>
+        </div>
+        
+        <!-- JDBC Version -->
+        <div class="card jdbc">
+            <div class="card-icon">💾</div>
+            <h3>Version avec JDBC <span class="badge">MySQL</span></h3>
+            <p>Intégration avec base de données MySQL pour persistance des données.</p>
+            <ul class="card-features">
+                <li>Connexion MySQL via JDBC</li>
+                <li>Sauvegarde des résultats</li>
+                <li>Historique des participations</li>
+                <li>Gestion des ressources</li>
+            </ul>
+            <a href="lottery-jdbc.html" class="btn">Lancer l'application</a>
+        </div>
+        
+        <!-- Secure Version -->
+        <div class="card secure">
+            <div class="card-icon">🔒</div>
+            <h3>Version Sécurisée <span class="badge">Auth</span></h3>
+            <p>Application avec authentification et contrôle d'accès basé sur les rôles.</p>
+            <ul class="card-features">
+                <li>Authentification HTTP BASIC</li>
+                <li>Rôle "tomcat" requis</li>
+                <li>Contraintes de sécurité</li>
+                <li>Realm Tomcat</li>
+            </ul>
+            <a href="greetings-secure.html" class="btn">Lancer l'application</a>
+        </div>
+        
+        <!-- Filtered Version -->
+        <div class="card filter">
+            <div class="card-icon">🚫</div>
+            <h3>Version avec Filtre <span class="badge">Filter</span></h3>
+            <p>Démonstration des filtres avec liste noire d'utilisateurs.</p>
+            <ul class="card-features">
+                <li>Filtre Java personnalisé</li>
+                <li>Blacklist configurable</li>
+                <li>Interception de requêtes</li>
+                <li>Page de refus d'accès</li>
+            </ul>
+            <a href="greetings-filtered.html" class="btn">Lancer l'application</a>
+        </div>
+        
+        <!-- HTTP Methods Demo -->
+        <div class="card advanced">
+            <div class="card-icon">🔧</div>
+            <h3>Méthodes HTTP <span class="badge new">Demo</span></h3>
+            <p>Démonstration de toutes les méthodes HTTP implémentées.</p>
+            <ul class="card-features">
+                <li>GET, POST, PUT, DELETE</li>
+                <li>HEAD, OPTIONS, TRACE</li>
+                <li>Override de service()</li>
+                <li>Tests interactifs</li>
+            </ul>
+            <a href="http-methods" class="btn">Lancer la démo</a>
+        </div>
+    </div>
+    
+    <div class="info-box" style="background: #FFF3E0; border-color: #FF9800;">
+        <h4>⚙️ Configuration Requise</h4>
+        <p>
+            <strong>Pour JDBC:</strong> MySQL Server + base de données lottery_db<br>
+            <strong>Pour Sécurité:</strong> Configuration tomcat-users.xml<br>
+            <strong>Pour Filtre:</strong> Aucune configuration supplémentaire requise
+        </p>
+    </div>
+    
+    <div class="footer">
+        <p><strong>TP1 - Les Servlets HTTP</strong></p>
+        <p>Communication P2P en temps réel sur le web | INE3 - INPT</p>
+        <p style="margin-top: 10px; font-size: 0.9em;">
+            📖 <a href="../README.md" style="color: #667eea;">Documentation</a> | 
+            🚀 <a href="../QUICKSTART.md" style="color: #667eea;">Guide Rapide</a> | 
+            🧪 <a href="../TESTING.md" style="color: #667eea;">Tests</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>

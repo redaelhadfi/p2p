@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Lottery Application with JDBC</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%);
+        color: white;
+        padding: 20px;
+    }
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 40px;
+        border-radius: 15px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    }
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .info {
+        background: rgba(255, 255, 255, 0.2);
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+    input[type="text"] {
+        width: 100%;
+        padding: 12px;
+        margin: 10px 0;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+    }
+    input[type="submit"] {
+        width: 100%;
+        padding: 12px;
+        background: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    input[type="submit"]:hover {
+        background: #45a049;
+    }
+    .warning {
+        background: rgba(255, 152, 0, 0.3);
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 15px;
+        font-size: 14px;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>🎰 Loterie avec Base de Données</h1>
+    
+    <div class="info">
+        <strong>ℹ️ Information</strong>
+        <p>Cette version sauvegarde vos résultats dans une base de données MySQL et affiche votre historique complet de participations.</p>
+    </div>
+    
+    <form action="lottery-jdbc" method="post">
+        <label for="nom"><strong>Votre nom:</strong></label>
+        <input type="text" id="nom" name="nom" placeholder="Entrez votre nom" required>
+        <input type="submit" value="🎲 Tenter ma chance!">
+    </form>
+    
+    <div class="warning">
+        <strong>⚠️ Pré-requis:</strong>
+        <ul style="margin: 10px 0 0 20px;">
+            <li>MySQL Server installé et démarré</li>
+            <li>Base de données 'lottery_db' créée</li>
+            <li>Driver JDBC MySQL dans WEB-INF/lib/</li>
+        </ul>
+        <p style="margin-top: 10px; font-size: 13px;">
+            📖 Consultez le fichier database/lottery_db.sql pour créer la base de données.
+        </p>
+    </div>
+    
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="index.html" style="color: white; text-decoration: none; background: rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 5px;">← Retour à l'accueil</a>
+    </div>
+</div>
+</body>
+</html>

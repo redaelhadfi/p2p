@@ -1,0 +1,16 @@
+{
+  "name": "webrtc-signaling-server",
+  "version": "1.0.0",
+  "description": "WebRTC Signaling Server with Socket.io",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": ["webrtc", "signaling", "socket.io", "p2p"],
+  "author": "Reda Elhadfi",
+  "license": "MIT",
+  "dependencies": {
+    "node-static": "^0.7.11",
+    "socket.io": "^2.5.0"
+  }
+}
